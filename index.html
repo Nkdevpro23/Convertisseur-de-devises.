@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Convertisseur de devise</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Convertisseur de devise</h1>
+    <form>
+      <label for="montant">Montant :</label>
+      <input type="number" id="montant" placeholder="Entrez le montant">
+      <label for="devise-depart">Devise de depart :</label>
+      <select id="devise-depart">
+        <option value="XOF">Francs CFA</option>
+        <option value="EUR">Euro</option>
+        <option value="USD">Dollar</option>
+      </select>
+      <label for="devise-arrivee">Devise d'arrivee :</label>
+      <select id="devise-arrivee">
+        <option value="XOF">Francs CFA</option>
+        <option value="EUR">Euro</option>
+        <option value="USD">Dollar</option>
+      </select>
+      <button id="convertir">Convertir</button>
+      <p id="resultat"></p>
+      <div class="nk">
+        NKDEVPRO
+      </div>
+    </form>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+<style>
+
+ .nk{
+font-family: fantasy;
+font-size: 12px;
+color: #804600;
+ }
+
+ /*  image dynamique */
+body {
+  font-family: Arial, sans-serif;
+  background-image: url('image.jpg'); 
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+/* contenue du form */
+.container {
+  max-width: 350px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: azure;
+  border: 1px solid #100b0b;
+  border-radius: 30px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  color: #804600; 
+  text-align: center;
+  font-size: 38px;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+  label {
+    display: block;
+   margin-bottom: 10px;
+}
+
+input[type="number"] {
+  width: 90%;
+  height: 40px;
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+}
+
+select {
+  width: 100%;
+  height: 40px;
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+}
+
+button {
+  width: 100%;
+  height: 40px;
+  background-color: #804600; 
+  color: #fff;
+ border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #006000; 
+}
+
+#resultat {
+  font-size: 2s4px;
+  font-weight: bold;
+  color: #008000; /* Vert */
+  text-align: center;
+  margin-top: 20px;
+}
+</style>
+
+<Script>
+
+  const montantInput = document.getElementById('montant');
+const deviseDepartSelect = document.getElementById('devise-depart');
+const deviseArriveeSelect = document.getElementById('devise-arrivee');
+const convertirButton = document.getElementById('convertir');
+const resultatParagraph = document.getElementById('resultat');
+
+const tauxDeChange = {
+  XOF: {
+    EUR: 0.00152,
+    USD: 0.0017,
+    XOF: 1
+  },
+  EUR: {
+    XOF: 655.957,
+    USD: 1.12,
+    EUR: 1
+  },
+  USD: {
+    XOF: 586.51,
+    EUR: 0.89,
+    USD: 1
+  }
+};
+
+convertirButton.addEventListener('click', (e) => {
+  e.preventDefault();
+
+  const montant = parseFloat(montantInput.value);
+  const deviseDepart = deviseDepartSelect.value;
+  const deviseArrivee = deviseArriveeSelect.value;
+
+  if (isNaN(montant) || montant <= 0) {
+    resultatParagraph.textContent = 'Veuillez entrer un montant valide';
+    return;
+  }
+
+  const taux = tauxDeChange[deviseDepart][deviseArrivee];
+  const resultat = montant * taux;
+
+  resultatParagraph.textContent = `${montant} ${deviseDepart} = ${resultat.toFixed(2)} ${deviseArrivee}`;
+});
+ </script>
